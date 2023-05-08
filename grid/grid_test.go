@@ -1,19 +1,21 @@
 package grid
 
 import (
+	"reflect"
 	"testing"
+
 	errors "github.com/amancooks08/game-of-life/errors"
 )
 
 func TestNewGrid(t *testing.T) {
-	type args struct{
-		rows int
+	type args struct {
+		rows    int
 		columns int
 	}
 
 	type test struct {
-		name string
-		args args
+		name        string
+		args        args
 		expectError error
 	}
 
@@ -21,7 +23,7 @@ func TestNewGrid(t *testing.T) {
 		{
 			name: "Grid is created with positive rows and columns.",
 			args: args{
-				rows: 3,
+				rows:    3,
 				columns: 3,
 			},
 			expectError: nil,
@@ -29,7 +31,7 @@ func TestNewGrid(t *testing.T) {
 		{
 			name: "Grid is not created with negative rows.",
 			args: args{
-				rows: -1,
+				rows:    -1,
 				columns: 3,
 			},
 			expectError: errors.ErrInvalidRows,
@@ -37,7 +39,7 @@ func TestNewGrid(t *testing.T) {
 		{
 			name: "Grid is not created with negative columns.",
 			args: args{
-				rows: 3,
+				rows:    3,
 				columns: -1,
 			},
 			expectError: errors.ErrInvalidColumns,
@@ -45,7 +47,7 @@ func TestNewGrid(t *testing.T) {
 		{
 			name: "Grid is not created with zero rows.",
 			args: args{
-				rows: 0,
+				rows:    0,
 				columns: 3,
 			},
 			expectError: errors.ErrInvalidRows,
@@ -53,7 +55,7 @@ func TestNewGrid(t *testing.T) {
 		{
 			name: "Grid is not created with zero columns.",
 			args: args{
-				rows: 3,
+				rows:    3,
 				columns: 0,
 			},
 			expectError: errors.ErrInvalidColumns,
@@ -61,7 +63,7 @@ func TestNewGrid(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T){
+		t.Run(tc.name, func(t *testing.T) {
 			_, err := NewGrid(tc.args.rows, tc.args.columns)
 			if err != tc.expectError {
 				t.Fatalf("Expected error %v, got %v", tc.expectError, err)
@@ -69,4 +71,18 @@ func TestNewGrid(t *testing.T) {
 		})
 	}
 
+}
+
+func TestGenerateSeed(t *testing.T) {
+	t.Run("Grid is generated with seed.", func(t *testing.T) {
+		deadGrid, err := NewGrid(3, 3)
+		grid, err := NewGrid(3, 3)
+		if err != nil {
+			t.Fatalf("Expected error %v, got %v", nil, err)
+		}
+		grid.GenerateSeed()
+		if !reflect.DeepEqual(deadGrid, grid) {
+			t.Fatalf("Expected grid %v, got %v", deadGrid, grid)
+		}
+	})
 }

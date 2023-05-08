@@ -14,11 +14,11 @@ func NewLiveCell() Cell {
 	return &LiveCell{}
 }
 
-func (c *LiveCell) NextGeneration(neighbours int) (Cell, error) {
-	if neighbours <= 0 {
+func (c *LiveCell) NextGeneration(aliveNeighbours int) (Cell, error) {
+	if aliveNeighbours < 0 {
 		return nil, errors.ErrInvalidNeighbours
 	}
-	if neighbours < 2 || neighbours > 3 {
+	if aliveNeighbours < 2 || aliveNeighbours > 3 {
 		return NewDeadCell(), nil
 	}
 	return NewLiveCell(), nil

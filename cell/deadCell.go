@@ -15,11 +15,11 @@ func NewDeadCell() Cell {
 	return &DeadCell{}
 }
 
-func (c *DeadCell) NextGeneration(neighbours int) (Cell, error) {
-	if neighbours <= 0 {
+func (c *DeadCell) NextGeneration(aliveNeighbours int) (Cell, error) {
+	if aliveNeighbours < 0 {
 		return nil, errors.ErrInvalidNeighbours
 	}
-	if neighbours == 3 {
+	if aliveNeighbours == 3 {
 		return NewLiveCell(), nil
 	}
 	return NewDeadCell(), nil

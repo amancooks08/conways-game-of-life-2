@@ -1,14 +1,11 @@
 package grid
 
-import "fmt"
-
 type CellAddress struct {
 	Row    int
 	Column int
 }
 
 func (add CellAddress) NeighboursFor(grid Grid) []CellAddress {
-	fmt.Println(grid)
 	lastRowIndex, lastColumnIndex := grid.Rows()-1, grid.Columns()-1
 	var neighbours []CellAddress
 	for row := add.Row - 1; row <= add.Row+1; row++ {

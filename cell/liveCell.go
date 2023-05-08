@@ -11,7 +11,7 @@ func (c LiveCell) IsAlive() bool {
 }
 
 func NewLiveCell() Cell {
-	return &LiveCell{}
+	return LiveCell{}
 }
 
 func (c LiveCell) NextGeneration(aliveNeighbours int) (Cell, error) {

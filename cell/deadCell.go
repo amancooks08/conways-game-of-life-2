@@ -7,15 +7,15 @@ import (
 type DeadCell struct {
 }
 
-func (c *DeadCell) IsAlive() bool {
+func (c DeadCell) IsAlive() bool {
 	return false
 }
 
 func NewDeadCell() Cell {
-	return &DeadCell{}
+	return DeadCell{}
 }
 
-func (c *DeadCell) NextGeneration(aliveNeighbours int) (Cell, error) {
+func (c DeadCell) NextGeneration(aliveNeighbours int) (Cell, error) {
 	if aliveNeighbours < 0 {
 		return nil, errors.ErrInvalidNeighbours
 	}

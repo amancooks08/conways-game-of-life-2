@@ -6,7 +6,7 @@ import (
 type LiveCell struct {
 }
 
-func (c *LiveCell) IsAlive() bool {
+func (c LiveCell) IsAlive() bool {
 	return true
 }
 
@@ -14,7 +14,7 @@ func NewLiveCell() Cell {
 	return &LiveCell{}
 }
 
-func (c *LiveCell) NextGeneration(aliveNeighbours int) (Cell, error) {
+func (c LiveCell) NextGeneration(aliveNeighbours int) (Cell, error) {
 	if aliveNeighbours < 0 {
 		return nil, errors.ErrInvalidNeighbours
 	}

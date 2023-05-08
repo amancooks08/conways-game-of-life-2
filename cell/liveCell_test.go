@@ -3,6 +3,7 @@ package cell
 import (
 	"testing"
 
+	errors "github.com/amancooks08/game-of-life/errors"
 	assert "github.com/stretchr/testify/assert"
 )
 
@@ -52,6 +53,12 @@ func TestNextGenerationOfLiveCell(t *testing.T) {
 			args:     args{neighbours: 4},
 			want:     NewDeadCell(),
 			expected: nil,
+		},
+		{
+			name:     "Live cell with negative alive neighbours returns error.",
+			args:     args{neighbours: -1},
+			want:     nil,
+			expected: errors.ErrInvalidNeighbours,
 		},
 	}
 

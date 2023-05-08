@@ -22,6 +22,11 @@ func NewGrid(rows int, columns int) (Grid, error) {
 	for row := 0; row < rows; row++ {
 		grid[row] = make([]cell.Cell, columns)
 	}
+	for row := 0; row < rows; row++ {
+		for column := 0; column < columns; column++ {
+			grid[row][column] = cell.NewDeadCell()
+		}
+	}
 	return Grid{
 		cells: grid,
 	}, nil

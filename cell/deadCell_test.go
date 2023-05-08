@@ -28,19 +28,19 @@ func TestNextGeneration(t *testing.T){
 
 	tests := []test{
 		{
-			name: "Dead cell with 3 neighbours becomes alive.",
+			name: "Dead cell with 3 alive neighbours becomes alive.",
 			args: args{neighbours: 3},
 			want: NewLiveCell(),
 			expected: nil,
 		},
 		{
-			name: "Dead cell with 2 neighbours stays dead.",
+			name: "Dead cell with 2 alive neighbours stays dead.",
 			args: args{neighbours: 2},
 			want: NewDeadCell(),
 			expected: nil,
 		},
 		{
-			name: "Dead cell with 4 neighbours stays dead.",
+			name: "Dead cell with 4 alive neighbours stays dead.",
 			args: args{neighbours: 4},
 			want: NewDeadCell(),
 			expected: nil,

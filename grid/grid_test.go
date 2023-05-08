@@ -81,7 +81,7 @@ func TestGenerateSeed(t *testing.T) {
 			t.Fatalf("Expected error %v, got %v", nil, err)
 		}
 		grid.GenerateSeed()
-		if !reflect.DeepEqual(deadGrid, grid) {
+		if reflect.DeepEqual(deadGrid, grid) {
 			t.Fatalf("Expected grid %v, got %v", deadGrid, grid)
 		}
 	})

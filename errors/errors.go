@@ -6,4 +6,6 @@ var (
 	ErrInvalidRowAddress    = errors.New("invalid row address")
 	ErrInvalidColumnAddress = errors.New("invalid column address")
 	ErrInvalidNeighbours	= errors.New("invalid number of neighbours")
+	ErrInvalidRows			= errors.New("invalid number of rows")
+	ErrInvalidColumns		= errors.New("invalid number of columns")
 )

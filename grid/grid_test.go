@@ -86,3 +86,21 @@ func TestGenerateSeed(t *testing.T) {
 		}
 	})
 }
+
+func TestTickNewPopulation(t *testing.T) {
+
+	t.Run("New Population is created.", func(t *testing.T) {
+		grid, err := NewGrid(3, 3)
+		if err != nil {
+			t.Fatalf("Expected error %v, got %v", nil, err)
+		}
+		grid.GenerateSeed()
+		newPopulation, err := grid.TickNewPopulation()
+		if err != nil {
+			t.Fatalf("Expected error %v, got %v", nil, err)
+		}
+		if reflect.DeepEqual(grid, newPopulation) {
+			t.Fatalf("Expected grid %v, got %v", grid, newPopulation)
+		}
+	})
+}

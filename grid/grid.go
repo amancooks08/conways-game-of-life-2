@@ -18,8 +18,12 @@ func NewGrid(rows int, columns int) (Grid, error) {
 	if columns < 0 || columns == 0 {
 		return Grid{}, errors.ErrInvalidColumns
 	}
+	grid := make([][]cell.Cell, rows)
+	for row := 0; row < rows; row++ {
+		grid[row] = make([]cell.Cell, columns)
+	}
 	return Grid{
-		cells: make([][]cell.Cell, rows),
+		cells: grid,
 	}, nil
 }
 
@@ -33,4 +37,43 @@ func (g Grid) GenerateSeed() {
 			}
 		}
 	}
+}
+
+func (g Grid) TickNewPopulation() (Grid, error) {
+	grid, err := NewGrid(int(g.Rows()), int(g.Columns()))
+	if err != nil {
+		return Grid{}, err
+	}
+	var row, column int
+	for row = 0; row < int(len(g.cells)); row++ {
+		for column = 0; column < int(len(g.cells[0])); column++ {
+			cell := g.cells[row][column]
+			cellNeighbours := CellAddress{row, column}.NeighboursFor(g)
+			aliveNeighbours := grid.countAliveNeighbours(cellNeighbours)
+			cell, err := g.cells[row][column].NextGeneration(aliveNeighbours)
+			if err != nil {
+				return Grid{}, err
+			}
+			grid.cells[row][column] = cell
+		}
+	}
+	return grid, nil
+}
+
+func (g Grid) Rows() int {
+	return int(len(g.cells))
+}
+
+func (g Grid) Columns() int {
+	return int(len(g.cells[0]))
+}
+
+func (g Grid) countAliveNeighbours(cellNeighbours []CellAddress) int {
+	var aliveNeighbours int
+	for _, neighbour := range cellNeighbours {
+		if g.cells[neighbour.Row][neighbour.Column] != nil && g.cells[neighbour.Row][neighbour.Column].IsAlive() {
+			aliveNeighbours++
+		}
+	}
+	return aliveNeighbours
 }

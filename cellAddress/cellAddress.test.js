@@ -15,4 +15,12 @@ describe('CellAddress', () => {
     it('should return the correct column', () => {
         expect(cellAddress.column).toBe(2);
     });
+
+    it('should throw error for negative row', () => {
+        expect(() => new CellAddress(-1, 2)).toThrowError('Invalid row');
+    });
+
+    it('should throw error for negative column', () => {
+        expect(() => new CellAddress(1, -2)).toThrowError('Invalid column');
+    });
 });

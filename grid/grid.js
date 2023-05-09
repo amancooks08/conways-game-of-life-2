@@ -1,4 +1,5 @@
 const {Cell, LiveCell, DeadCell} = require('../cell/cell');
+const { CellAddress } = require('../cellAddress/cellAddress');
 
 class Grid {
 
@@ -9,15 +10,13 @@ class Grid {
         if (columns <= 0) {
             throw new Error('Invalid columns');
         }
-        this.rows = rows;
-        this.columns = columns;
         this.cells = new Array(rows);
         for (let i = 0; i < rows; i++) {
             this.cells[i] = new Array(columns);
         }
         for(let i = 0; i < rows; i++) {
             for(let j = 0; j < columns; j++) {
-                this.cells[i][j] = new Cell(new DeadCell());
+                this.cells[i][j] = new DeadCell();
             }
         }
     }
@@ -34,6 +33,39 @@ class Grid {
                 }
             }
         }
+    }
+
+    countAliveNeighbours(neighbours) {
+        let aliveNeighbours = 0;
+        for(let neighbour of neighbours) {
+            if(this.cells[neighbour.x][neighbour.y].isAlive()) {
+                aliveNeighbours++;
+            }
+        }
+        return aliveNeighbours;
+    }
+
+    put(row, column, cell) {
+        if( row < 0 || row >= this.rows || column < 0 || column >= this.columns) {
+            throw new Error('Invalid row or column');
+        }
+        this.cells[row][column] = cell;
+
+    }
+
+    tickNewGeneration() {
+        let newGrid = new Grid(this.cells.length, this.cells.length);
+
+        for(let row = 0; row < this.cells.length; row++) {
+            for(let column = 0; column < this.cells[0].length; column++) {
+                let cell = this.cells[row][column];
+                let neighbours = new CellAddress(row, column).getNeighbours(this);
+                let aliveNeighbours = this.countAliveNeighbours(neighbours);
+                let newCell = cell.nextGeneration(aliveNeighbours);
+                newGrid.put(row, column, newCell);
+            }
+        }
+        return newGrid;
     }
 }
 

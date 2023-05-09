@@ -1,6 +1,6 @@
 class Cell {
 
-    constructor() {}
+    // constructor() {}
 
     isAlive() {}
     
@@ -8,9 +8,9 @@ class Cell {
 }
 
 class DeadCell extends Cell {
-    // constructor() {
-    //     super();
-    // }
+    constructor() {
+        super();
+    }
 
     isAlive() {
         return false;
@@ -40,3 +40,9 @@ class LiveCell extends Cell {
         return this;
     }
 }
+
+module.exports = {
+    Cell,
+    DeadCell,
+    LiveCell
+};

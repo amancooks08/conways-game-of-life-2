@@ -21,6 +21,20 @@ class Grid {
             }
         }
     }
+
+    generateSeed() {
+        let rand = Math.floor(Math.random() * 2);
+
+        for(let i = 0; i < this.rows; i++) {
+            for(let j = 0; j < this.columns; j++) {
+                if(rand == 0) {
+                    this.cells[i][j].cell = new DeadCell();
+                } else {
+                    this.cells[i][j].cell = new LiveCell();
+                }
+            }
+        }
+    }
 }
 
 module.exports = {Grid};

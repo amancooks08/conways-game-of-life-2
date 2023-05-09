@@ -28,4 +28,11 @@ describe('Grid', () => {
             expect(() => new Grid(3, 0)).toThrowError('Invalid columns');
         });
     });
+
+    describe('generateSeed', () => {
+        // generate a new grid and with that a seed, which shouldn't be equal to the original grid
+        it("should return a new grid" , () => {
+            expect(grid.generateSeed()).not.toBe(grid);
+        });
+    });
 });

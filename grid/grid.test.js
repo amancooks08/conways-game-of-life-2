@@ -51,4 +51,20 @@ describe('Grid', () => {
             expect(newGrid).not.toBe(grid);
         });
     });
+
+    describe('DisplayGrid', () => {
+        it("should return a new grid" , () => {
+            grid.put(0, 0, new LiveCell());
+            grid.put(0, 1, new LiveCell());
+            grid.put(0, 2, new LiveCell());
+
+            console.log(grid.Display())
+            
+            let newGrid = grid.tickNewGeneration();
+            
+            console.log(newGrid.Display())
+
+            expect(newGrid).not.toBe(grid);
+        });
+    });
 });

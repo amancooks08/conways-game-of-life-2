@@ -35,7 +35,7 @@ class Grid {
         }
     }
 
-    countAliveNeighbours(neighbours) {
+    #countAliveNeighbours(neighbours) {
         let aliveNeighbours = 0;
         for(let neighbour of neighbours) {
             if(this.cells[neighbour.x][neighbour.y].isAlive()) {
@@ -60,12 +60,28 @@ class Grid {
             for(let column = 0; column < this.cells[0].length; column++) {
                 let cell = this.cells[row][column];
                 let neighbours = new CellAddress(row, column).getNeighbours(this);
-                let aliveNeighbours = this.countAliveNeighbours(neighbours);
+                let aliveNeighbours = this.#countAliveNeighbours(neighbours);
                 let newCell = cell.nextGeneration(aliveNeighbours);
                 newGrid.put(row, column, newCell);
             }
         }
         return newGrid;
+    }
+
+    Display(){
+        let grid = '';
+        for(let row = 0; row < this.cells.length; row++) {
+            for(let column = 0; column < this.cells[0].length; column++) {
+                if (this.cells[row][column].isAlive()) {
+                    grid += '* ';
+                }
+                else {
+                    grid += 'O ';
+                }
+            }
+            grid += '\n';
+        }
+        return grid;
     }
 }
 

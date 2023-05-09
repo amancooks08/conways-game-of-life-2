@@ -82,3 +82,26 @@ func (g Grid) countAliveNeighbours(cellNeighbours []CellAddress) int {
 	}
 	return aliveNeighbours
 }
+
+func (g Grid) put(cell cell.Cell, row int, column int) error {
+	if row < 0 || column < 0 || row >= g.Rows() || column >= g.Columns() {
+		return errors.ErrInvalidCellAddress
+	}
+	g.cells[row][column] = cell
+	return nil
+}
+
+func (g Grid) DisplayPopulation() string {
+	var display string
+	for row := 0; row < int(len(g.cells)); row++ {
+		for column := 0; column < int(len(g.cells[0])); column++ {
+			if g.cells[row][column].IsAlive() {
+				display += "O "
+			} else {
+				display += "* "
+			}
+		}
+		display += "\n"
+	}
+	return display
+}

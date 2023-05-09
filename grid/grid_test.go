@@ -1,10 +1,13 @@
 package grid
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 
+	"github.com/amancooks08/game-of-life/cell"
 	errors "github.com/amancooks08/game-of-life/errors"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewGrid(t *testing.T) {
@@ -103,4 +106,27 @@ func TestTickNewPopulation(t *testing.T) {
 			t.Fatalf("Expected grid %v, got %v", grid, newPopulation)
 		}
 	})
+}
+
+func TestDisplayPopulation(t *testing.T) {
+	grid, err := NewGrid(3, 3)
+	if err != nil {
+		t.Fatalf("Expected error %v, got %v", nil, err)
+	}
+
+	grid.put(cell.NewLiveCell(), 0, 0)
+	grid.put(cell.NewLiveCell(), 0, 1)
+	grid.put(cell.NewLiveCell(), 1, 0)
+
+	fmt.Println(grid.DisplayPopulation())
+	newGrid, err := grid.TickNewPopulation()
+	if err != nil {
+		t.Fatalf("Expected error %v, got %v", nil, err)
+	}
+	expectedGrid, err := NewGrid(3, 3)
+	if err != nil {
+		t.Fatalf("Expected error %v, got %v", nil, err)
+	}
+	fmt.Println(expectedGrid.DisplayPopulation())
+	assert.Equal(t, expectedGrid, newGrid)
 }

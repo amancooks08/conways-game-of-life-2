@@ -9,11 +9,11 @@ describe('CellAddress', () => {
     });
 
     it('should return the correct row', () => {
-        expect(cellAddress.row).toBe(1);
+        expect(cellAddress.x).toBe(1);
     });
 
     it('should return the correct column', () => {
-        expect(cellAddress.column).toBe(2);
+        expect(cellAddress.y).toBe(2);
     });
 
     it('should throw error for negative row', () => {
